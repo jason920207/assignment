@@ -8,6 +8,7 @@ DO NOT MODIFY this file
 module.exports = {
     itemsById: {
         '0001': {
+            id: '0001',
             name: 'apple',
             department: 'grocery',
             category: 'fresh produce',
@@ -15,6 +16,7 @@ module.exports = {
             price: 1.01,
         },
         '0002': {
+            id: '0002',
             name: 'pear',
             department: 'grocery',
             category: 'fresh produce',
@@ -22,13 +24,15 @@ module.exports = {
             price: 2.02,
         },
         '0003': {
+            id: '0003',
             name: 'mens gucci hat',
             department: 'apparel',
-            category: 'men',
+            category: 'mens',
             weight: '3lbs',
             price: 50.05,
         },
         '0004': {
+            id: '0004',
             name: 'tv',
             department: 'electronics',
             category: 'tv and video',
@@ -36,6 +40,7 @@ module.exports = {
             price: 100.01,
         },
         '0005': {
+            id: '0005',
             name: 'chair',
             department: 'home and furniture',
             category: 'furniture',
@@ -45,7 +50,7 @@ module.exports = {
         },
     },
     usersRecommendedItemsByUsername: {
-        james: ['0001', '0002', '0003', '0004', '0005'],
+        james: ['0001', '0003', '0004', '0005'],
         monica: ['0004', '0005'],
     }
 };
