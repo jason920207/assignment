@@ -17,6 +17,7 @@ const typeDefs = gql`
     type Item {
         id: ID!
         name: String!
+        img: String!
         department: String!
         category: String!
         weight: String
