@@ -3,9 +3,10 @@ import Grid from '@material-ui/core/Grid';
 import RecommendCard from '../recommendCard'
 import { useState, useEffect, useRef } from 'react'
 import styles from './recommendCarousel.module.css'
+import Link from 'next/link'
+import { dynamicProductUri } from '../../utils/dynamicProductUri'
 
-
-export default function RecommendCarousel({ recommnendedItems }) {
+export default function RecommendCarousel({ recommnendedItems, username }) {
 
   const [items, setItems] = useState([])
   const [index, setIndex] = useState(0)
@@ -32,13 +33,17 @@ export default function RecommendCarousel({ recommnendedItems }) {
         {index === 1 && <button onClick={onPressPrev} className={styles.prev}>{'<'}</button>}
         {
           items.map((item, index) => (
-            <Grid item xs={2}>
-              <RecommendCard key={`${item.name}-${index}`} item={item} />
+            <Grid key={`${item.name}-${index}`} item xs={2}>
+              <Link href={dynamicProductUri(item.name, item.id, username)}>
+                <a>
+                  <RecommendCard item={item} />
+                </a>
+              </Link>
             </Grid>
+
           ))
         }
         {index === 0 && <button onClick={onPressNext} className={styles.next}>{'>'}</button>}
-
       </Grid>
       <Grid container justify="center"
         alignItems="center" >

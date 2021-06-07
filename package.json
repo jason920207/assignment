@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "description": "Walmart Mexico Code Challenge",
     "scripts": {
-        "bootstrap": "lerna bootstrap"
+        "bootstrap": "lerna bootstrap",
+        "start": "lerna run --parallel start",
+        "dev": "lerna run --parallel start"
     },
     "author": "walmex-team",
     "license": "ISC",
