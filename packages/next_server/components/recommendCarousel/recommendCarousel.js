@@ -30,7 +30,7 @@ export default function RecommendCarousel({ recommnendedItems, username }) {
     <>
       <h2>Products You May Also Like</h2>
       <Grid container spacing={3} className={styles.container} >
-        {index === 1 && <button onClick={onPressPrev} className={styles.prev}>{'<'}</button>}
+        {(index === 1 && recommnendedItems.length >= 6) && <button onClick={onPressPrev} className={styles.prev}>{'<'}</button>}
         {
           items.map((item, index) => (
             <Grid key={`${item.name}-${index}`} item xs={2}>
@@ -43,15 +43,19 @@ export default function RecommendCarousel({ recommnendedItems, username }) {
 
           ))
         }
-        {index === 0 && <button onClick={onPressNext} className={styles.next}>{'>'}</button>}
+        {(index === 0 && recommnendedItems.length >= 6) && <button onClick={onPressNext} className={styles.next}>{'>'}</button>}
       </Grid>
-      <Grid container justify="center"
-        alignItems="center" >
-        <div className={styles.dotContainer}>
-          <span className={`${styles.dot} ${index === 0 ? styles.active : ""}`} onClick={onPressPrev}></span>
-          <span className={`${styles.dot} ${index === 1 ? styles.active : ""}`} onClick={onPressNext}></span>
-        </div>
-      </Grid >
+      {
+        recommnendedItems.length >= 6 &&
+        <Grid container justify="center"
+          alignItems="center" >
+          <div className={styles.dotContainer}>
+            <span className={`${styles.dot} ${index === 0 ? styles.active : ""}`} onClick={onPressPrev}></span>
+            <span className={`${styles.dot} ${index === 1 ? styles.active : ""}`} onClick={onPressNext}></span>
+          </div>
+        </Grid >
+      }
+
     </>
   )
 }
