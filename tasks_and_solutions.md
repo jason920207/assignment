@@ -10,7 +10,8 @@ Your instructions: <___TODO-FILL_ME_IN___>
 
 Your instructions: <___TODO-FILL_ME_IN___>
 
----
+--- 
+Add "start": "lerna run --parallel start" in the package.json in the root, and if want to start up all 3 server, just use npm run start
 
 3) The dev team you are working on has asked you to make sure this repo's code always looks pretty and easy to read since other developers from all around the world will be writing to it and some will not know what formatting you like in your code (ex. they may use 1 space vs 2 spaces to indent their code). Describe how you will make sure committed code is always formatted consistently and implement the tool or process.
 
@@ -28,7 +29,8 @@ Describe your solution: <___TODO-FILL_ME_IN___>
 
 Describe your solution: <___TODO-FILL_ME_IN___>
 
----
+--- 
+Add some function call weightConversion and isGrocery, first, check the isGrocery, if isGrocery is true, will change “Weight” to “Shipping Weight” , otherwise will not change, and use weightConversion to check the weight and return the valid value for weight.
 
 6) The dev-ops team has noticed that calls from the React app to fetch the userRecommendedItems are taking a very long time and it is causing the microservice server to almost crash during peak site usage. Please fix this issue by making changes to either the React app or the graphql server or both to try and reduce this load on the microservice. Briefly describe your solution so the devops team understands:
 
@@ -43,3 +45,6 @@ it (ex. '000$'), they can cause the microservice server to crash because the DB 
 Describe your solution: <___TODO-FILL_ME_IN___>
 
 ---
+
+Add valid function in getItemsByID.js in routes, and if contain '$' will return 400 and error msg.
+Add valid function in ssr, if id contain $ will redirect to 404 page

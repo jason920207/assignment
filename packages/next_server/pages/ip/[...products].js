@@ -23,7 +23,12 @@ export async function getServerSideProps(context) {
   const id = context.query.products[1]
 
   if (id.indexOf('$') !== -1) {
-    return { props: { error: true } }
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    }
   }
 
   const username = context.query.username
@@ -70,21 +75,11 @@ export async function getServerSideProps(context) {
 
   }
 
-  return { props: { item: itemResp.item, recommnendedItems: usersRecommendedItems, error: false } }
+  return { props: { item: itemResp.item, recommnendedItems: usersRecommendedItems } }
 }
 
-export default function FirstPost({ item, recommnendedItems, error }) {
+export default function FirstPost({ item, recommnendedItems }) {
   const router = useRouter()
-
-  useEffect(() => {
-    if (error) {
-      router.push('/404')
-    }
-  }, [])
-
-  if (error) {
-    return <div>redirect...</div>
-  }
 
   return (
     <>
