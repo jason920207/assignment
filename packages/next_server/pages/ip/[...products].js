@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -10,19 +10,21 @@ import {
 } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { request, gql } from "graphql-request";
-
+import { dehydrate } from 'react-query/hydration'
 import ItemComponent from '../../components/itemComponent/itemComponent'
 import RecommendCarousel from '../../components/recommendCarousel/recommendCarousel'
 import Container from '@material-ui/core/Container';
+import { useItem, fetchItem, fetchRecommendedItems, useRecommendedItems } from '../../hooks'
+import { dynamicProductUri } from '../../utils/dynamicProductUri'
 
 const endpoint = "http://localhost:4000/graphql";
 
 const queryClient = new QueryClient();
 
 export async function getServerSideProps(context) {
-  const id = context.query.products[1]
+  const itemId = context.query.products[1]
 
-  if (id.indexOf('$') !== -1) {
+  if (itemId.indexOf('$') !== -1) {
     return {
       redirect: {
         destination: '/404',
@@ -31,63 +33,56 @@ export async function getServerSideProps(context) {
     }
   }
 
-  const username = context.query.username
-  let usersRecommendedItems = []
-  const itemQuery = gql`
-        query GetItem($id: ID!) {
-            item(id: $id){
-            id,
-            name,
-            img,
-            department,
-            category,
-            weight,
-            packagedWeight,
-            price
-            }
-        }
-    `
+  const username = context.query.username ? context.query.username : ''
 
-  const itemVariable = {
-    "id": id
-  }
+  const queryClient = new QueryClient()
 
-  const itemResp = await request(endpoint, itemQuery, itemVariable)
+  await queryClient.prefetchQuery(["item", itemId], () => fetchItem(itemId))
+
+  let recommnendedItems = []
+
+  // const item = await fetchItem(id)
 
   if (username) {
-    const recommendedQuery = gql`
-        query GetRecommendedItems($username: String!) {
-            usersRecommendedItems(username: $username){
-            id,
-            name,
-            img,
-            price
-        }
-    }
-    `
-    const recommendedItemVariable = {
-      "username": username
-    }
-    const recommnendedItemResp = await request(endpoint, recommendedQuery, recommendedItemVariable)
-    if (recommnendedItemResp.usersRecommendedItems && recommnendedItemResp.usersRecommendedItems.length > 0) {
-      usersRecommendedItems = recommnendedItemResp.usersRecommendedItems
-    }
-
+    recommnendedItems = await fetchRecommendedItems(username)
   }
-
-  return { props: { item: itemResp.item, recommnendedItems: usersRecommendedItems } }
+  return { props: { id: itemId, username, recommnendedItems: recommnendedItems, dehydratedState: dehydrate(queryClient), } }
 }
 
-export default function FirstPost({ item, recommnendedItems }) {
+export default function FirstPost({ id, username, recommnendedItems }) {
   const router = useRouter()
+  const [itemId, seItemId] = useState(id)
+
+  const itemData = useQuery(["item", itemId], () => fetchItem(itemId))
+  const recommendedItemData = useQuery('usersRecommendedItems', () => fetchRecommendedItems(username), { initialData: recommnendedItems })
+
+  const handleItem = (e, name, id) => {
+    e.preventDefault()
+    router.push(dynamicProductUri(name, id, username), undefined, { shallow: true })
+    seItemId(id)
+  }
 
   return (
     <>
       <Container>
-        <ItemComponent item={item} />
+        {itemData.status === "loading" ? (
+          "Loading..."
+        ) : itemData.status === "error" ? (
+          <span>Error: {recommendedItem.error.message}</span>
+        ) : (
+              <ItemComponent item={itemData.data.item} />
+            )
+        }
         {
-          (recommnendedItems && recommnendedItems.length > 0) &&
-          <RecommendCarousel recommnendedItems={recommnendedItems.slice(0, 12)} username={router.query.username} />
+          recommendedItemData.status === "loading" ? (
+            "Loading..."
+          ) : recommendedItemData.status === "error" ? (
+            <span>Error: {recommendedItemData.error.message}</span>
+          ) : <RecommendCarousel
+                recommnendedItems={recommendedItemData.data.slice(0, 12)}
+                username={router.query.username}
+                handleItem={handleItem} />
+
         }
       </Container>
 

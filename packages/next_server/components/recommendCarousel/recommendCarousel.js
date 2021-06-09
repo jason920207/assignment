@@ -6,7 +6,7 @@ import styles from './recommendCarousel.module.css'
 import Link from 'next/link'
 import { dynamicProductUri } from '../../utils/dynamicProductUri'
 
-export default function RecommendCarousel({ recommnendedItems, username }) {
+export default function RecommendCarousel({ recommnendedItems, username, handleItem }) {
 
   const [items, setItems] = useState([])
   const [index, setIndex] = useState(0)
@@ -25,6 +25,9 @@ export default function RecommendCarousel({ recommnendedItems, username }) {
     setIndex(1)
   }
 
+  if (recommnendedItems.length <= 0) {
+    return <></>
+  }
 
   return (
     <>
@@ -33,13 +36,14 @@ export default function RecommendCarousel({ recommnendedItems, username }) {
         {(index === 1 && recommnendedItems.length >= 6) && <button onClick={onPressPrev} className={styles.prev}>{'<'}</button>}
         {
           items.map((item, index) => (
+
             <Grid key={`${item.name}-${index}`} item xs={2}>
-              <Link href={dynamicProductUri(item.name, item.id, username)}>
-                <a>
-                  <RecommendCard item={item} />
-                </a>
-              </Link>
+              <a href={dynamicProductUri(item.name, item.id, username)} onClick={(e) => handleItem(e, item.name, item.id)} >
+                <RecommendCard item={item} />
+              </a>
+
             </Grid>
+
 
           ))
         }
