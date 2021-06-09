@@ -11,22 +11,23 @@ import {
 import { ReactQueryDevtools } from "react-query/devtools";
 import { request, gql } from "graphql-request";
 import { dehydrate } from "react-query/hydration";
-import { ItemComponent, RecommendCarousel, Spinner } from "../../components";
+import { ItemComponent, RecommendCarousel, Spinner } from "../../../../components";
 import Container from "@material-ui/core/Container";
 import {
   useItem,
   fetchItem,
   fetchRecommendedItems,
   useRecommendedItems,
-} from "../../hooks";
-import { dynamicProductUri } from "../../utils/dynamicProductUri";
+} from "../../../../hooks";
+import { dynamicProductUri } from "../../../../utils/dynamicProductUri";
 
 const endpoint = "http://localhost:4000/graphql";
 
 const queryClient = new QueryClient();
 
 export async function getServerSideProps(context) {
-  const itemId = context.query.products[1];
+  console.log(context)
+  const itemId = context.query.id;
 
   if (itemId.indexOf("$") !== -1) {
     return {
@@ -87,19 +88,19 @@ export default function FirstPost({ id, username, recommnendedItems }) {
         ) : itemData.status === "error" ? (
           <span>Error: {recommendedItem.error.message}</span>
         ) : (
-          <ItemComponent item={itemData.data.item} />
-        )}
+              <ItemComponent item={itemData.data.item} />
+            )}
         {recommendedItemData.status === "loading" ? (
           <Spinner />
         ) : recommendedItemData.status === "error" ? (
           <span>Error: {recommendedItemData.error.message}</span>
         ) : (
-          <RecommendCarousel
-            recommnendedItems={recommendedItemData.data.slice(0, 12)}
-            username={router.query.username}
-            handleItem={handleItem}
-          />
-        )}
+              <RecommendCarousel
+                recommnendedItems={recommendedItemData.data.slice(0, 12)}
+                username={router.query.username}
+                handleItem={handleItem}
+              />
+            )}
       </Container>
     </>
   );
