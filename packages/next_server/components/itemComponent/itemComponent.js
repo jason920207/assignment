@@ -17,7 +17,7 @@ export function ItemComponent({ item }) {
           <h3>Specifications</h3>
         </div>
         <div>
-          <h4>{isGrocery ? "Weight" : "Shipping Weight"}</h4>
+          <h4>{isGrocery(item.department) ? "Weight" : "Shipping Weight"}</h4>
           <span>{`${weightFormat(item.weight, item.packagedWeight)}`}</span>
         </div>
         <div>
