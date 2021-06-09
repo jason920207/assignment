@@ -11,8 +11,7 @@ import {
 import { ReactQueryDevtools } from "react-query/devtools";
 import { request, gql } from "graphql-request";
 import { dehydrate } from 'react-query/hydration'
-import ItemComponent from '../../components/itemComponent/itemComponent'
-import RecommendCarousel from '../../components/recommendCarousel/recommendCarousel'
+import { ItemComponent, RecommendCarousel, Spinner } from '../../components'
 import Container from '@material-ui/core/Container';
 import { useItem, fetchItem, fetchRecommendedItems, useRecommendedItems } from '../../hooks'
 import { dynamicProductUri } from '../../utils/dynamicProductUri'
@@ -66,7 +65,7 @@ export default function FirstPost({ id, username, recommnendedItems }) {
     <>
       <Container>
         {itemData.status === "loading" ? (
-          "Loading..."
+          <Spinner />
         ) : itemData.status === "error" ? (
           <span>Error: {recommendedItem.error.message}</span>
         ) : (
@@ -75,7 +74,7 @@ export default function FirstPost({ id, username, recommnendedItems }) {
         }
         {
           recommendedItemData.status === "loading" ? (
-            "Loading..."
+            <Spinner />
           ) : recommendedItemData.status === "error" ? (
             <span>Error: {recommendedItemData.error.message}</span>
           ) : <RecommendCarousel

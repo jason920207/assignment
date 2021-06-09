@@ -1,12 +1,12 @@
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import RecommendCard from '../recommendCard'
+import { RecommendCard } from '../index'
 import { useState, useEffect, useRef } from 'react'
 import styles from './recommendCarousel.module.css'
 import Link from 'next/link'
 import { dynamicProductUri } from '../../utils/dynamicProductUri'
 
-export default function RecommendCarousel({ recommnendedItems, username, handleItem }) {
+export function RecommendCarousel({ recommnendedItems, username, handleItem }) {
 
   const [items, setItems] = useState([])
   const [index, setIndex] = useState(0)

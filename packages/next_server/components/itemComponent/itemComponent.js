@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import styles from './itemComponent.module.css'
 import { isGrocery } from '../../utils/isGrocery'
 
-export default function ItemComponent({ item }) {
+export function ItemComponent({ item }) {
   return (
     <Grid container spacing={3}>
       <h2>{item.name}</h2>

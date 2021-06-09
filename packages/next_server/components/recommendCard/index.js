@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function recommendCard({ item }) {
+export function RecommendCard({ item }) {
   const classes = useStyles();
 
   return (
