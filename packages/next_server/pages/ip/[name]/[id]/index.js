@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
   console.log(context)
   const itemId = context.query.id;
 
-  if (itemId.indexOf("$") !== -1) {
+  if (!itemId.match(/[0-9]{4}/)) {
     return {
       redirect: {
         destination: "/404",
