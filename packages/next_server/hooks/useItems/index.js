@@ -25,8 +25,6 @@ const fetchItem = async (id) => {
     }
   );
 
-  console.log(item);
-
   return item;
 };
 

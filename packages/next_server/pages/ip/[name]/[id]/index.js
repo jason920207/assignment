@@ -26,7 +26,7 @@ const endpoint = "http://localhost:4000/graphql";
 const queryClient = new QueryClient();
 
 export async function getServerSideProps(context) {
-  console.log(context)
+
   const itemId = context.query.id;
 
   if (!itemId.match(/[0-9]{4}/)) {
