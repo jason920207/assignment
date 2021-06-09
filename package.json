@@ -5,7 +5,8 @@
     "scripts": {
         "bootstrap": "lerna bootstrap",
         "start": "lerna run --parallel start",
-        "dev": "lerna run --parallel start",
+        "dev": "lerna run --parallel dev",
+        "build": "lerna run --parallel build",
         "lint": "lerna run --parallel lint"
     },
     "author": "walmex-team",

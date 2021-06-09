@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "description": "apollo-graphql-server",
     "engines": {
-        "node": ">=12.0.0"
+        "node": ">=12.0.0",
+        "dev":"cross-env NODE_ENV=development node ./src/index.js",
+        "build":"cross-env NODE_ENV=production node ./src/index.js"
     },
     "scripts": {
         "start": "node ./src/index.js"
