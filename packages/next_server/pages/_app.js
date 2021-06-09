@@ -1,12 +1,12 @@
-import React from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { Hydrate } from 'react-query/hydration'
-import { ReactQueryDevtools } from 'react-query/devtools'
-import '../styles.css'
-import '@material-ui/styles'
+import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { Hydrate } from "react-query/hydration";
+import { ReactQueryDevtools } from "react-query/devtools";
+import "../styles.css";
+import "@material-ui/styles";
 
 export default function MyApp({ Component, pageProps }) {
-  const [queryClient] = React.useState(() => new QueryClient())
+  const [queryClient] = React.useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -15,5 +15,5 @@ export default function MyApp({ Component, pageProps }) {
       </Hydrate>
       <ReactQueryDevtools />
     </QueryClientProvider>
-  )
+  );
 }

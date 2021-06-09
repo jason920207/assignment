@@ -5,11 +5,13 @@
     "scripts": {
         "bootstrap": "lerna bootstrap",
         "start": "lerna run --parallel start",
-        "dev": "lerna run --parallel start"
+        "dev": "lerna run --parallel start",
+        "lint": "lerna run --parallel lint"
     },
     "author": "walmex-team",
     "license": "ISC",
     "dependencies": {
         "lerna": "^4.0.0"
-    }
+    },
+    "devDependencies": {}
 }
